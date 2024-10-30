@@ -1,8 +1,6 @@
-# Variable values for the development environment
+# Variable values specific to the development environment
 
-instance_type = "t2.micro"  # EC2 instance type for dev
-ami_id        = "ami-06b21ccaeff8cd686"  # AMI ID for the EC2 instance
-tags = {
-  Name        = "habtamu-dev-instance"  # Name tag for the EC2 instance
-  Environment = "development"  # Environment tag
-}
+ami_id       = "ami-06b21ccaeff8cd686"  # Specify the AMI ID for the EC2 instance (update as needed)
+instance_type = "t2.micro"              # Choose an appropriate instance type that qualifies for Free Tier
+
+

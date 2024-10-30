@@ -1,24 +1,17 @@
+# Main Terraform configuration for the test environment
+
 terraform {
-  required_version = ">= 1.0.0"
-
   backend "s3" {
-    bucket         = "habtamu-terraform-state-bucket-test"  # Hardcoded bucket name for test
-    key            = "terraform/state/test.tfstate"          # Hardcoded state file key for test
-    region         = "us-east-1"                             # Hardcoded region
-    dynamodb_table = "habtamu-terraform-state-lock-test"     # Hardcoded DynamoDB table for test
+    bucket         = "habtamu-terraform-state-bucket-test"  # S3 bucket for state
+    key            = "terraform.tfstate"                     # Key for the state file
+    region         = "us-east-1"                             # Specify the AWS region
+    dynamodb_table = "terraform-state-locks"                 # DynamoDB table for locking
   }
 }
 
-provider "aws" {
-  region = "us-east-1"
+# Call the root main file
+module "root" {
+  source        = "../.."  # Point to the root directory
+  ami_id        = var.ami_id  # Pass the ami_id variable
+  instance_type = var.instance_type  # Pass the instance_type variable
 }
-
-resource "aws_instance" "example" {
-  ami           = "ami-12345678"  # Replace with a valid AMI ID
-  instance_type = "t2.micro"      # Cost-effective instance type
-
-  tags = {
-    Name = "TestInstance"
-  }
-}
-
